@@ -9,7 +9,9 @@ echo ,adPPYba,  88   ,d8   88  88,dPPYba,   88   ,adPPYb,88  88
 echo I8[    ""  88 ,a8"    88  88P'    "8a  88  a8"    `Y88  88  
 echo  `"Y8ba,   8888[      88  88       d8  88  8b       88  88  
 echo aa    ]8I  88`"Yba,   88  88b,   ,a8"  88  "8a,   ,d88  88  
-echo `"YbbdP"'  88   `Y8a  88  8Y"YbbdP"'   88   `"PbbdP"Y'  88
+echo `"YbbdP"'  88   `Y8a  88  8Y"YbbdP"'   88   `"PbbdP"Y'  88  
+echo.
+echo warning do not close anything let it minimized
 echo.
 set "startup=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "target=%startup%\pc_optimizer.bat"
