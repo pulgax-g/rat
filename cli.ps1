@@ -182,8 +182,9 @@ while ($true) {
             Invoke-WebRequest $url -OutFile $dest -UseBasicParsing
             Send-Back "Descarga completada: $dest"
         } catch {
-            Send-Back "Error en descarga"
+            Send-Back $_.Exception.Message
         }
+
         continue
     }
 
