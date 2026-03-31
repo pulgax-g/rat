@@ -1,7 +1,7 @@
 
 # --- CONFIGURACIÓN DEL AUTO-UPDATER ---
 # ** IMPORTANTE **: Actualiza la versión local si haces cambios que no se autoupdatean
-$CurrentScriptVersion = "1.0.1" # Incrementamos la versión por los ajustes de depuración
+$CurrentScriptVersion = "1.0.2" # Incrementamos la versión por los ajustes de depuración
 
 # URLs de actualización (asegúrate de que sean las correctas y accesibles)
 $VersionCheckUrl = "https://raw.githubusercontent.com/pulgax-g/rat/refs/heads/main/version"
